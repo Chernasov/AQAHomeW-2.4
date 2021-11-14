@@ -1,1 +1,1 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/48m43w3h9ylstaa2?svg=true)](https://ci.appveyor.com/project/Chernasov/aqahomew-2-3-2)
+[![Build status](https://ci.appveyor.com/api/projects/status/1s951pkv00e1dj8b?svg=true)](https://ci.appveyor.com/project/Chernasov/aqahomew-2-4)

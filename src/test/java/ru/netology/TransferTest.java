@@ -12,13 +12,14 @@ public class TransferTest {
     @BeforeEach
     void setUpPage() {
         open("http://localhost:9999/");
-//        user = new DataGenerator();
     }
 
     @Test
     void shouldTransferMoneyBetweenOwnCards() {
         var loginPage = new LoginPage();
         var infoValidUser = DataHelper.getAuthInfo();
-
+        var verificationPage = loginPage.validLogin(infoValidUser);
+        var verificationCode = DataHelper.getVerificationCodeFor(infoValidUser);
+        verificationPage.validVerify(verificationCode);
     }
 }
