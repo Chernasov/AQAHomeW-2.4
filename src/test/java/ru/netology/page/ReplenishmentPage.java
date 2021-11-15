@@ -25,6 +25,12 @@ public class ReplenishmentPage {
         return new DashboardPage();
     }
 
+    public DashboardPage emptyField() {
+        buttonReplenishment.click();
+        $("[data-test-id=error-notification]").shouldBe(visible).shouldHave(text("Ошибка"));
+        return new DashboardPage();
+    }
+
     private String last4number(String text) {
         val value = text.substring(15);
         return value;

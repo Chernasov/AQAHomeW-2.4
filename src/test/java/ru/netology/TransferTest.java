@@ -1,6 +1,5 @@
 package ru.netology;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -19,8 +18,7 @@ public class TransferTest {
 
     @Test
     @Order(1)
-    void shouldReplenismentFirstOwnCardFromSecond() {
-        int transfer = 1000;
+    void shouldTransferAllFromSecondToFirst() {
         var loginPage = new LoginPage();
         var infoValidUser = DataHelper.getAuthInfo();
         var verificationPage = loginPage.validLogin(infoValidUser);
@@ -28,6 +26,7 @@ public class TransferTest {
         var dashboardPage = verificationPage.validVerify(verificationCode);
         var balanceCardFirstBefore = dashboardPage.getFirstCardBalance();
         var balanceCardSecondBefore = dashboardPage.getSecondCardBalance();
+        int transfer = balanceCardSecondBefore;
         var replenishment = dashboardPage.replenishmentFirstCard();
         var numberCardFrom = DataHelper.getNumberSecondCard();
         var numberCardTo = DataHelper.getNumberFirstCard();
@@ -40,8 +39,7 @@ public class TransferTest {
 
     @Test
     @Order(2)
-    void shouldReplenishmentSecondOwnCardFromFirst() {
-        int transfer = 1000;
+    void shouldTransferAllFromFirstToSecond() {
         var loginPage = new LoginPage();
         var infoValidUser = DataHelper.getAuthInfo();
         var verificationPage = loginPage.validLogin(infoValidUser);
@@ -49,6 +47,7 @@ public class TransferTest {
         var dashboardPage = verificationPage.validVerify(verificationCode);
         var balanceCardFirstBefore = dashboardPage.getFirstCardBalance();
         var balanceCardSecondBefore = dashboardPage.getSecondCardBalance();
+        int transfer = balanceCardFirstBefore;
         var replenishment = dashboardPage.replenishmentSecondCard();
         var numberCardFrom = DataHelper.getNumberFirstCard();
         var numberCardTo = DataHelper.getNumberSecondCard();
@@ -59,5 +58,37 @@ public class TransferTest {
         assertEquals(balanceCardSecondBefore + transfer, balanceCardSecondAfter);
     }
 
+    @Test
+    @Order(4)
+    void shouldTransferOverFromSecondToFirst() {
+        var loginPage = new LoginPage();
+        var infoValidUser = DataHelper.getAuthInfo();
+        var verificationPage = loginPage.validLogin(infoValidUser);
+        var verificationCode = DataHelper.getVerificationCodeFor(infoValidUser);
+        var dashboardPage = verificationPage.validVerify(verificationCode);
+        var balanceCardFirstBefore = dashboardPage.getFirstCardBalance();
+        var balanceCardSecondBefore = dashboardPage.getSecondCardBalance();
+        int transfer = balanceCardSecondBefore + 1;
+        var replenishment = dashboardPage.replenishmentFirstCard();
+        var numberCardFrom = DataHelper.getNumberSecondCard();
+        var numberCardTo = DataHelper.getNumberFirstCard();
+        var dashboardPageAfter = replenishment.replenishment(transfer, numberCardFrom, numberCardTo);
+        var balanceCardFirstAfter = dashboardPageAfter.getFirstCardBalance();
+        var balanceCardSecondAfter = dashboardPageAfter.getSecondCardBalance();
+        assertEquals(balanceCardFirstBefore, balanceCardFirstAfter);
+        assertEquals(balanceCardSecondBefore, balanceCardSecondAfter);
+    }
+
+    @Test
+    @Order(3)
+    void shouldTransferEmptyField() {
+        var loginPage = new LoginPage();
+        var infoValidUser = DataHelper.getAuthInfo();
+        var verificationPage = loginPage.validLogin(infoValidUser);
+        var verificationCode = DataHelper.getVerificationCodeFor(infoValidUser);
+        var dashboardPage = verificationPage.validVerify(verificationCode);
+        var replenishment = dashboardPage.replenishmentFirstCard();
+        replenishment.emptyField();
+    }
 
 }
