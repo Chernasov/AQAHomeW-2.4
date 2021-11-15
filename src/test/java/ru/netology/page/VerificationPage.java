@@ -2,6 +2,7 @@ package ru.netology.page;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import lombok.val;
 import ru.netology.data.DataHelper;
 
 import static com.codeborne.selenide.Condition.*;
@@ -20,4 +21,5 @@ public class VerificationPage {
         $("[data-test-id='action-verify']").click();
         return new DashboardPage();
     }
+
 }
