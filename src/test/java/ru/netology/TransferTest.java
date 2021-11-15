@@ -17,8 +17,7 @@ public class TransferTest {
     }
 
     @Test
-    @Order(1)
-    void shouldTransferAllFromSecondToFirst() {
+    void shouldTransferFromSecondToFirst() {
         var loginPage = new LoginPage();
         var infoValidUser = DataHelper.getAuthInfo();
         var verificationPage = loginPage.validLogin(infoValidUser);
@@ -26,20 +25,19 @@ public class TransferTest {
         var dashboardPage = verificationPage.validVerify(verificationCode);
         var balanceCardFirstBefore = dashboardPage.getFirstCardBalance();
         var balanceCardSecondBefore = dashboardPage.getSecondCardBalance();
-        int transfer = balanceCardSecondBefore;
+        int transfer = 5000;
         var replenishment = dashboardPage.replenishmentFirstCard();
         var numberCardFrom = DataHelper.getNumberSecondCard();
         var numberCardTo = DataHelper.getNumberFirstCard();
         var dashboardPageAfter = replenishment.replenishment(transfer, numberCardFrom, numberCardTo);
         var balanceCardFirstAfter = dashboardPageAfter.getFirstCardBalance();
         var balanceCardSecondAfter = dashboardPageAfter.getSecondCardBalance();
-        assertEquals(balanceCardFirstBefore + transfer, balanceCardFirstAfter);
-        assertEquals(balanceCardSecondBefore - transfer, balanceCardSecondAfter);
+        assertEquals(15000, balanceCardFirstAfter);
+        assertEquals(5000, balanceCardSecondAfter);
     }
 
     @Test
-    @Order(2)
-    void shouldTransferAllFromFirstToSecond() {
+    void shouldTransferFromFirstToSecond() {
         var loginPage = new LoginPage();
         var infoValidUser = DataHelper.getAuthInfo();
         var verificationPage = loginPage.validLogin(infoValidUser);
@@ -47,40 +45,18 @@ public class TransferTest {
         var dashboardPage = verificationPage.validVerify(verificationCode);
         var balanceCardFirstBefore = dashboardPage.getFirstCardBalance();
         var balanceCardSecondBefore = dashboardPage.getSecondCardBalance();
-        int transfer = balanceCardFirstBefore;
+        int transfer = 5000;
         var replenishment = dashboardPage.replenishmentSecondCard();
         var numberCardFrom = DataHelper.getNumberFirstCard();
         var numberCardTo = DataHelper.getNumberSecondCard();
         var dashboardPageAfter = replenishment.replenishment(transfer, numberCardFrom, numberCardTo);
         var balanceCardFirstAfter = dashboardPageAfter.getFirstCardBalance();
         var balanceCardSecondAfter = dashboardPageAfter.getSecondCardBalance();
-        assertEquals(balanceCardFirstBefore - transfer, balanceCardFirstAfter);
-        assertEquals(balanceCardSecondBefore + transfer, balanceCardSecondAfter);
+        assertEquals(10000, balanceCardFirstAfter);
+        assertEquals(10000, balanceCardSecondAfter);
     }
 
     @Test
-    @Order(4)
-    void shouldTransferOverFromSecondToFirst() {
-        var loginPage = new LoginPage();
-        var infoValidUser = DataHelper.getAuthInfo();
-        var verificationPage = loginPage.validLogin(infoValidUser);
-        var verificationCode = DataHelper.getVerificationCodeFor(infoValidUser);
-        var dashboardPage = verificationPage.validVerify(verificationCode);
-        var balanceCardFirstBefore = dashboardPage.getFirstCardBalance();
-        var balanceCardSecondBefore = dashboardPage.getSecondCardBalance();
-        int transfer = balanceCardSecondBefore + 1;
-        var replenishment = dashboardPage.replenishmentFirstCard();
-        var numberCardFrom = DataHelper.getNumberSecondCard();
-        var numberCardTo = DataHelper.getNumberFirstCard();
-        var dashboardPageAfter = replenishment.replenishment(transfer, numberCardFrom, numberCardTo);
-        var balanceCardFirstAfter = dashboardPageAfter.getFirstCardBalance();
-        var balanceCardSecondAfter = dashboardPageAfter.getSecondCardBalance();
-        assertEquals(balanceCardFirstBefore, balanceCardFirstAfter);
-        assertEquals(balanceCardSecondBefore, balanceCardSecondAfter);
-    }
-
-    @Test
-    @Order(3)
     void shouldTransferEmptyField() {
         var loginPage = new LoginPage();
         var infoValidUser = DataHelper.getAuthInfo();
@@ -90,5 +66,29 @@ public class TransferTest {
         var replenishment = dashboardPage.replenishmentFirstCard();
         replenishment.emptyField();
     }
+    @Test
+    void shouldTransferOverFromSecondToFirst() {
+        var loginPage = new LoginPage();
+        var infoValidUser = DataHelper.getAuthInfo();
+        var verificationPage = loginPage.validLogin(infoValidUser);
+        var verificationCode = DataHelper.getVerificationCodeFor(infoValidUser);
+        var dashboardPage = verificationPage.validVerify(verificationCode);
+        var balanceCardFirstBefore = dashboardPage.getFirstCardBalance();
+        var balanceCardSecondBefore = dashboardPage.getSecondCardBalance();
+        int transfer = 30000;
+        var replenishment = dashboardPage.replenishmentFirstCard();
+        var numberCardFrom = DataHelper.getNumberSecondCard();
+        var numberCardTo = DataHelper.getNumberFirstCard();
+        var dashboardPageAfter = replenishment.replenishment(transfer, numberCardFrom, numberCardTo);
+        var balanceCardFirstAfter = dashboardPageAfter.getFirstCardBalance();
+        var balanceCardSecondAfter = dashboardPageAfter.getSecondCardBalance();
+        System.out.println(balanceCardFirstBefore);
+        System.out.println(balanceCardSecondBefore);
+        assertEquals(balanceCardSecondBefore, balanceCardSecondAfter);
+        assertEquals(balanceCardFirstBefore, balanceCardFirstAfter);
+
+    }
+
+
 
 }
