@@ -66,6 +66,7 @@ public class TransferTest {
         var replenishment = dashboardPage.replenishmentFirstCard();
         replenishment.emptyField();
     }
+
     @Test
     void shouldTransferOverFromSecondToFirst() {
         var loginPage = new LoginPage();
@@ -82,13 +83,10 @@ public class TransferTest {
         var dashboardPageAfter = replenishment.replenishment(transfer, numberCardFrom, numberCardTo);
         var balanceCardFirstAfter = dashboardPageAfter.getFirstCardBalance();
         var balanceCardSecondAfter = dashboardPageAfter.getSecondCardBalance();
-        System.out.println(balanceCardFirstBefore);
-        System.out.println(balanceCardSecondBefore);
         assertEquals(balanceCardSecondBefore, balanceCardSecondAfter);
         assertEquals(balanceCardFirstBefore, balanceCardFirstAfter);
 
     }
-
 
 
 }
