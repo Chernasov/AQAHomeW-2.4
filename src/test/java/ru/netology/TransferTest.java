@@ -32,8 +32,8 @@ public class TransferTest {
         var dashboardPageAfter = replenishment.replenishment(transfer, numberCardFrom, numberCardTo);
         var balanceCardFirstAfter = dashboardPageAfter.getFirstCardBalance();
         var balanceCardSecondAfter = dashboardPageAfter.getSecondCardBalance();
-        assertEquals(15000, balanceCardFirstAfter);
-        assertEquals(5000, balanceCardSecondAfter);
+        assertEquals(balanceCardFirstBefore + transfer, balanceCardFirstAfter);
+        assertEquals(balanceCardSecondBefore - transfer, balanceCardSecondAfter);
     }
 
     @Test
@@ -52,8 +52,8 @@ public class TransferTest {
         var dashboardPageAfter = replenishment.replenishment(transfer, numberCardFrom, numberCardTo);
         var balanceCardFirstAfter = dashboardPageAfter.getFirstCardBalance();
         var balanceCardSecondAfter = dashboardPageAfter.getSecondCardBalance();
-        assertEquals(10000, balanceCardFirstAfter);
-        assertEquals(10000, balanceCardSecondAfter);
+        assertEquals(balanceCardFirstBefore - transfer, balanceCardFirstAfter);
+        assertEquals(balanceCardSecondBefore + transfer, balanceCardSecondAfter);
     }
 
     @Test
